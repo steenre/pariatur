@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<div class="dash-page">
+    <div class="dash-header">
+        <h1>Dashboard</h1>
+        <button class="tools-toggle-btn" id="tools-btn">&#9776; Tools</button>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="s-label">Total Posts</div>
+            <div class="s-num">{{ post_count }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="s-label">Categories</div>
+            <div class="s-num">{{ categories_count }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="s-label">Status</div>
+            <div class="s-num" style="font-size:1.6rem; padding-top:0.5rem;">
+                {% if request.user.is_superuser %}Admin{% else %}Viewer{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="dash-body">
+        <div class="dash-sidebar" id="dash-sidebar">
+            <h3>Tools</h3>
+            <div class="tool-bar">
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'create' %}">Create Post</a>
+                    <a href="{% url 'create-category' %}">Create Category</a>
+                    <a href="{% url 'manage' %}">Manage Posts &amp; Categories</a>
+                    <a href="{% url 'logout-site-manager' %}" class="danger">Logout</a>
+                {% else %}
+                    <a href="{% url 'logout-site-manager' %}" class="danger">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="dash-content">
+            {% if not request.user.is_superuser %}
+                <p class="empty-note">You are logged in as a viewer and cannot make changes.</p>
+            {% else %}
+                <p class="empty-note">Select a tool from the sidebar to get started.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

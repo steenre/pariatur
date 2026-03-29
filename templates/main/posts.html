@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Posts{% endblock %}
+{% block content %}
+
+<div class="posts-wrapper">
+    <div class="posts-col">
+        <div class="sh">
+            <p class="section-label">All Posts</p>
+            <div class="search-form-holder">
+                <form action="" method="get"><input type="search" class="form-control" name="q" id="" placeholder="search"></form>
+            </div>
+
+        </div>
+
+        {% for post in posts %}
+            <a href="{% url 'post' post.slug %}">
+                <div class="post-card">
+                    <div class="post-card-body">
+                        <span class="post-card-cat">By {{ post.author }} | {{post.publishedAt}}</span>
+                        <h2 class="post-card-title">{{ post.title }}</h2>
+                        <p class="post-card-excerpt">{{ post.description|truncatewords:25 }}</p>
+                    </div>
+                    <div class="post-card-img">
+                        {% if post.urlToImage == "None" %}
+                            <img src="{% static 'img/pic02.jpg' %}" alt="{{ post.title }}">
+                        {% else %}
+                            <img src="{{ post.urlToImage }}" alt="{{ post.title }}">
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+
+        {% empty %}
+            <div class="empty-state">No posts published yet.</div>
+        {% endfor %}
+    </div>
+
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Trending</h3>
+            {% for post in posts %}
+                    <div class="trending-item">
+                        <span class="trending-text">{{ post.title }}</span>
+                    </div>
+            {% empty %}
+                <p class="empty-state" style="padding: 1rem 0;">Nothing trending yet.</p>
+            {% endfor %}
+        </div>
+    </aside>
+</div>
+
+{% endblock %}

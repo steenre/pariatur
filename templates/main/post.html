@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ post.author }}{% endblock %}
+{% block content %}
+
+<div class="post-layout">
+    <article class="post-main">
+        <span class="post-cat">Source <b>{{ post.source.name }}</b></span>
+        <h1>{{ post.title }}</h1>
+        <div class="post-meta">
+            <span>{{ post.author }}</span>
+            <span class="meta-sep">|</span>
+            <span>{{ post.publishedAt }}</span>
+            {% if post.updated_at %}
+                <span class="meta-sep">|</span>
+                <span>Updated {{ post.updated_at }}</span>
+            {% endif %}
+        </div>
+
+        <div class="post-featured-img">
+                        {% if post.urlToImage == None %}
+                            <img src="{% static 'img/pic02.jpg' %}" alt="{{ post.title }}">
+                        {% else %}
+                            <img src="{{ post.urlToImage }}" alt="{{ post.title }}">
+                        {% endif %}
+        </div>
+
+        <div class="post-body">
+            <p>{{ post.content|safe }}</p>
+            <a href="{{ post.url }}" target="_blank" class="read-more">Read Full Article</a>
+        </div>
+    </article>
+
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Same Category</h3>
+            {% for p in other_posts %}
+                    <div class="trending-item">
+                        <span class="trending-num">0{{ forloop.counter }}</span>
+                        <span class="trending-text">{{ p.title }}</span>
+                    </div>
+            {% empty %}
+                <p style="font-size:0.82rem; color: var(--muted); padding-top: 0.5rem;">No other posts in this category.</p>
+            {% endfor %}
+        </div>
+    </aside>
+</div>
+
+{% endblock %}

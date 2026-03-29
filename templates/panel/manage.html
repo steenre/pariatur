@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Manage Posts &amp; Categories{% endblock %}
+{% block content %}
+
+<div class="manage-page">
+    <a href="{{ request.META.HTTP_REFERER }}" class="back-link">Go Back</a>
+
+    <div class="page-header">
+        <h2>Manage</h2>
+    </div>
+
+    <p class="manage-section-label">Posts</p>
+
+    {% for post in posts %}
+        <div class="manage-item">
+            <div class="manage-item-info">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.excerpt }} &mdash; by {{ post.author }}</p>
+            </div>
+            <div class="manage-item-actions">
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'edit' post.slug %}">
+                        <button class="edit">Edit</button>
+                    </a>
+                    <a href="{% url 'remove' post.slug %}">
+                        <button class="remove">Remove</button>
+                    </a>
+                {% else %}
+                    <span class="no-access-msg">Read-only</span>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <div class="empty-state">No posts yet.</div>
+    {% endfor %}
+
+    <p class="manage-section-label">Categories</p>
+
+    {% for cat in cats %}
+        <div class="manage-item">
+            <div class="manage-item-info">
+                <h3>{{ cat.cat_name }}</h3>
+            </div>
+            <div class="manage-item-actions">
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'edit-category' cat.cat_name %}">
+                        <button class="edit">Edit</button>
+                    </a>
+                    <a href="{% url 'remove-category' cat.cat_name %}">
+                        <button class="remove">Remove</button>
+                    </a>
+                {% else %}
+                    <span class="no-access-msg">Read-only</span>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <div class="empty-state">No categories yet.</div>
+    {% endfor %}
+</div>
+
+{% endblock %}

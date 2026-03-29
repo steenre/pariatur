@@ -1,0 +1,15 @@
+psycopg-binary
+dotenv
+SQLAlchemy==2.0.44
+
+amqp==5.3.1
+annotated-types==0.7.0
+asgiref==3.10.0
+browser-cookie3==0.20.1
+Django==5.2.7
+gunicorn==23.0.0
+idna==3.11
+itsdangerous==2.2.0
+Jinja2==3.1.6
+pillow==11.3.0
+whitenoise==6.11.0

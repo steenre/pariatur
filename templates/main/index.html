@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+
+<section class="hero">
+    <div class="hero-text">
+        <span class="hero-eyebrow">Est. 2024 &mdash; Independent Publishing</span>
+        <h1 class="hero-headline">
+            Ideas worth<br>
+            <em>reading.</em>
+        </h1>
+        <p class="hero-sub">
+            Pariatur is a home for thoughtful writing &mdash; stories, essays,
+            and perspectives that make you stop and think.
+        </p>
+        <a href="{% url 'posts' %}" class="hero-cta">Read the latest</a>
+    </div>
+
+    <div class="hero-visual">
+        <div class="hero-stat">
+            <div class="stat-num">{{post_count|default:"0"}}</div>
+            <div class="stat-label">Published posts</div>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat">
+            <div class="stat-num">{{categories_count|default:"0"}}</div>
+            <div class="stat-label">Categories</div>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Ideas explored</div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

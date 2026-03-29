@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Remove {{ post.title }}{{ category.cat_name }}{% endblock %}
+{% block content %}
+
+<div class="form-page">
+    <div class="form-card" style="border-top-color: var(--accent);">
+        <a href="{{ request.META.HTTP_REFERER }}" class="back-link">Go Back</a>
+        <h3>Confirm Delete</h3>
+
+        {% if page_name == 'Category' %}
+        <div class="remove-warning">
+            <h4>Warning</h4>
+            {% if cat_count == 0 %}
+                <p>No posts will be affected.</p>
+            {% elif cat_count == 1 %}
+                <p>This will also remove <strong>{{ cat_count }} post</strong> in the {{ category.cat_name }} category.</p>
+            {% else %}
+                <p>This will also remove <strong>all {{ cat_count }} posts</strong> in the {{ category.cat_name }} category.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <p class="confirm-text">
+            Are you sure you want to permanently delete
+            <b>{{ post.title }}{{ category.cat_name }}</b>?
+            This action cannot be undone.
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="btn-holder">
+                <button type="submit" class="delete">Yes, Delete</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

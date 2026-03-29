@@ -1,0 +1,88 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{post.excerpt}} by {{post.author}}">
+    <title>{% block title %}{{title}}{% endblock %} | Pariatur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<div id="preloader">
+    <div class="jumper">
+        <div></div><div></div><div></div>
+    </div>
+</div>
+
+<header>
+    <a href="{% url 'landing' %}" class="site-logo">Pariatur</a>
+    <div class="nav-btn" id="nav-btn">
+        <span></span><span></span><span></span><span></span>
+    </div>
+</header>
+
+<nav id="main-nav">
+    <ul>
+        <a href="{% url 'landing' %}"><li>Home</li></a>
+        <a href="{% url 'posts' %}"><li>Posts</li></a>
+        <a href=""><li>Categories</li></a>
+        <a href=""><li>Contact</li></a>
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'logout-site-manager' %}"><li>Logout</li></a>
+        {% endif %}
+    </ul>
+</nav>
+
+{% if messages %}
+<ul class="django-messages">
+    {% for message in messages %}
+        <li class="message {{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+<footer>
+    <span class="footer-logo">Pariatur</span>
+    <p>&copy; {% now "Y" %} Pariatur &mdash; All rights reserved.</p>
+</footer>
+
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+<!-- <script>
+    // Preloader
+    window.addEventListener('load', function () {
+        var pl = document.getElementById('preloader');
+        pl.style.transition = 'opacity 0.4s ease';
+        pl.style.opacity = '0';
+        setTimeout(function(){ pl.style.display = 'none'; }, 420);
+    });
+
+    // Nav toggle
+    var navBtn = document.getElementById('nav-btn');
+    var mainNav = document.getElementById('main-nav');
+    if (navBtn) {
+        navBtn.addEventListener('click', function () {
+            navBtn.classList.toggle('active');
+            mainNav.classList.toggle('active');
+        });
+    }
+
+    // Dashboard sidebar toggle
+    var toolsBtn = document.getElementById('tools-btn');
+    var dashSidebar = document.querySelector('.dash-sidebar');
+    if (toolsBtn && dashSidebar) {
+        toolsBtn.addEventListener('click', function () {
+            dashSidebar.classList.toggle('on');
+        });
+    }
+</script> -->
+</body>
+</html>
