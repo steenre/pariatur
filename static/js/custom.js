@@ -4,7 +4,7 @@ jQuery( document ).ready(function( $ ) {
 
         // Page loading animation
 
-        // $(window).on('load',function() {
+        $(window).on('load',function() {
         $("#preloader").animate({
             'opacity': '0'
         }, 600, function(){
@@ -12,7 +12,7 @@ jQuery( document ).ready(function( $ ) {
                 $("#preloader").css("visibility", "hidden").fadeOut();
             }, 300);
         });
-        // });
+        });
 
         $(".django-messages").animate(3000, function(){
             setTimeout(function(){
